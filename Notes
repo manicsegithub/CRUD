@@ -1,0 +1,122 @@
+1.Create the Maven project
+   spring initializr io (Google it)
+   Set the project metadata
+   Add Dependence
+   Then Generate
+
+2.Open the file in intellij ide
+    Use the src/main/java/
+     create the controller and services
+     Use some annotation controller
+        RestController
+        RestMapping
+        GetMapping
+     Use some annotation in services
+        create getter and setter
+        create constructor
+    Then run the 'maven' file
+
+3.Use the postman api
+   create account
+   create the new workspace
+   create new collection
+   Add new Request
+
+4.Create Database
+    Maven Spring Boot Starter Data JPA (google it) jpa for database uses
+       JPA - Java Persistence API
+       Add the dependence in pom file
+    spring boot mysql '/target/classes/crud/application.properties'
+      Use the below file and paste in "src/main/resources/application.properties"
+       spring.jpa.hibernate.ddl-auto=update
+       spring.datasource.url=jdbc:mysql://localhost:3306/springboot_crud
+       spring.datasource.username=root //mysql workbench connection name
+       spring.datasource.password=mysqlroot
+       spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+       spring.jpa.show-sql: true
+
+5.Add dependence mysql
+   Maven mysql connector-j (google it)
+     Use the below file and paste in pom.xml
+     <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+     <dependency>
+         <groupId>com.mysql</groupId>
+         <artifactId>mysql-connector-j</artifactId>
+         <version>9.2.0</version>
+     </dependency>
+
+   After paste the file rerun the file it show the 'hibernate ORM core'
+   it show connectivity of file
+
+6.Create Entity
+   Create package in 'src/main/java/crud.'
+   create the class, then change the class to entity class
+   use some annotation
+     @Entity - change the normal class to entity class
+     @Table(name = "users")
+   Create constructor and also create the default constructor
+   UserEntity is directly connect with mysql table
+   Set the getter and Setter
+
+7.Create Repository
+  Repository is used for access the controller and Entity
+  Using repository to managing the entity or database
+  Create the new package
+    In userRepository extends 'jpaRepository<entity, datatype of id>'
+
+
+8.Get the user list API
+   We use the UserController to access the userentity
+   create the UserRepository class and add the 'Autowired' annotation to create the object
+     ' public List<UserEntity> getUser(){
+           return userRepository.findAll();
+        } '
+   Create the user at 'UserController' file
+   Use the POST Method and use the @PostMapping Annotation
+   Then we use the postman to post method with using same url
+     In Postman choose body and select raw, change value to JSON
+   Use @RequestBody UserEntity user (user or anyname)
+
+9.Get the Single User API
+   Here we use the userid 'getUserById()' used in UserController
+   Add the one get method in postman
+   In UserController use the '@GetMapping("/{id}")'
+   @PathVariable Long id
+   Optional<userEntity>
+   userRepository.findById(id);
+
+10.Handling No User Error
+   Create the new package in java file, package name exception
+   Inherit the RunTimeException
+   create the constructor and pass the string and value
+   Add the annotation @ResponseStatus(Value=HttpStatus.NOT_FOUND)
+   In UserController
+      Use the OrElseThrow and use the Anonymous fun and call the
+      exception file and add the id value
+
+11.Update Users API
+   Use the Postman
+      create the new put request
+      change in body to row and json
+   Use the userController
+      Add the PutMapping(/{id})
+      Use the handling no user error and post method argument value
+      assign in the userData
+      use the set and get method to update the data
+
+12.Delete User API
+    Use the postman
+      create the new request DELETE
+      use the get user Api url for delete
+    Use Controller
+      use the @DeleteMapping annotation
+      use the get user api method
+      return ResponseEntity.ok().build()
+      In Method ResponseEntity<?>, ? is known as Generic method
+
+13.Documenting API using Swagger
+    In Google browser
+      maven springdoc openapi stater
+      open the first link and copy the dependence
+      And the paste the dependence in pom.xml file
+      the open browser 'localhost:8080/swagger-ui/index.html'
